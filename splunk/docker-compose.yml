@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  splunk:
+    image: splunk/splunk:9.2.1
+    container_name: splunk
+    ports:
+      - "8000:8000"  # UI
+      - "8088:8088"  # HEC
+      - "9997:9997"  # Splunkd receiving
+    environment:
+      - SPLUNK_START_ARGS=${SPLUNK_START_ARGS}
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD}
+      - SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN}
+      - SPLUNK_HEC_ENABLE=${SPLUNK_HEC_ENABLE}
+      - SPLUNK_HTTP_PORT=${SPLUNK_HTTP_PORT}
+      - SPLUNK_HEC_PORT=${SPLUNK_HEC_PORT}
+    volumes:
+      - splunk-var:/opt/splunk/var
+      - splunk-etc:/opt/splunk/etc
+volumes:
+  splunk-var:
+  splunk-etc:
