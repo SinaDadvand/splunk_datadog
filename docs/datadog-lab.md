@@ -371,14 +371,16 @@ kubectl create namespace datadog
 helm repo add datadog https://helm.datadoghq.com
 helm repo update
 
-helm upgrade --install datadog datadog/datadog `
-  -n datadog `
-  --set datadog.apiKey=$env:DD_API_KEY `
-  --set datadog.site=$env:DD_SITE `
-  --set datadog.logs.enabled=true `
-  --set datadog.apm.enabled=true `
-  --set datadog.processAgent.enabled=true `
-  --set targetSystem=linux
+helm upgrade datadog datadog/datadog -n datadog `
+  --set datadog.apiKey="$env:DD_API_KEY" `
+  --set datadog.clusterName="dev-cluster" `
+  --set datadog.site="us5.datadoghq.com" `
+  --set datadog.kubelet.tlsVerify=false `
+  --set orchestratorExplorer.enabled=true `
+  --set clusterAgent.enabled=true `
+  --set agents.enabled=true `
+  --set clusterAgent.envDict.DD_CLUSTER_NAME="dev-cluster" `
+  --set clusterAgent.envDict.DD_ORCHESTRATOR_EXPLORER_ENABLED="true"
 ```
 
 How to verify:
